@@ -4,47 +4,88 @@
 @section('content')
 <div class="space-y-20">
     <div class="text-center">
-        <span class="text-[#c9973a] text-xs uppercase tracking-[3px]">Col·lecció Completa</span>
+        <span class="text-[#c9973a] text-[30px] uppercase tracking-[5px]">Col·lecció Completa</span>
         <h1 class="text-4xl mt-4 uppercase tracking-tighter">Obres d'art</h1>
     </div>
+    <section class="relative h-[400px] md:h-[600px] rounded-3xl overflow-hidden flex items-center justify-center text-center px-6">
+        <img src="/images/exposiciones/museu_pell2.jpeg" 
+            alt="Fons Hero Nonart" 
+            class="absolute inset-0 w-full h-full object-cover">
 
-    <section>
-        <h2 class="text-[#c9973a] text-lg uppercase tracking-widest mb-10 border-b border-[#3d352b] pb-4">Vides</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div class="bg-[#282119] p-4 rounded-xl border border-[#3d352b]">
-                <div class="h-48 bg-[#332b22] rounded-lg mb-4"></div>
-                <div class="flex justify-between items-center mb-1">
-                    <h3 class="text-sm">Paisatge de tardor</h3>
-                    <span class="text-[#fb2c36] text-[10px]">Venut</span>
-                </div>
-                <p class="text-[#a0937f] text-[10px] mb-4">Ainoa Sillero</p>
-                <a href="#" class="block text-center py-2 border border-[#3d352b] text-[10px] uppercase text-[#a0937f]">Veure Detall</a>
-            </div>
-            <div class="bg-[#282119] p-4 rounded-xl border border-[#3d352b]">
-                <div class="h-48 bg-[#332b22] rounded-lg mb-4"></div>
-                <div class="flex justify-between items-center mb-1">
-                    <h3 class="text-sm">Noia desconeguda</h3>
-                    <span class="text-[#00c950] text-[10px]">• Disponible</span>
-                </div>
-                <p class="text-[#a0937f] text-[10px] mb-4">Ainoa Sillero</p>
-                <a href="#" class="block text-center py-2 border border-[#3d352b] text-[10px] uppercase text-[#a0937f]">Veure Detall</a>
-            </div>
-            </div>
+        <div class="absolute inset-0 bg-black/40 rounded-3xl  "></div>
+
+        <div class="relative z-20 max-w-xl">
+            <span class="text-[#c9973a] text-[60px] tracking-[5px] uppercase 
+                        [-webkit-text-stroke:0.01px_black]  font-bold">Ainoa Sillero Bernaldez</span>
+            <h1 class="text-4xl md:text-6xl mt-4 mb-6 [-webkit-text-stroke:0.3px_black]">Obres creades</h1>
+            <p class="text-[#f2ede6] text-[22px] leading-relaxed [-webkit-text-stroke:0.3px_black]">
+                Endinsat en la meva col.lecció d'art.
+            </p>
+        </div>
     </section>
 
-    <section>
-        <h2 class="text-[#c9973a] text-lg uppercase tracking-widest mb-10 border-b border-[#3d352b] pb-4">EPIDERMIS</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div class="bg-[#282119] p-4 rounded-xl border border-[#3d352b]">
-                <div class="h-48 bg-[#332b22] rounded-lg mb-4"></div>
-                <h3 class="text-sm mb-1">Pell Descoberta</h3>
-                <p class="text-[#a0937f] text-[10px] mb-4">Ainoa Sillero</p>
-                <div class="flex justify-between items-center text-[10px]">
-                    <span class="text-[#c9973a]">125€</span>
-                    <span class="text-[#00c950]">• Disponible</span>
+    <div class="container mx-auto py-20">
+        @foreach($obrasAgrupadas as $nombreColeccion => $obras)
+            <section class="mb-52"> <div class="text-center mb-24">
+                    <span class="text-[#a0937f] text-xs uppercase tracking-[0.5em] block mb-3">COLECCIÓ</span>
+                    <h2 class="text-[#c9973a] text-4xl md:text-5xl uppercase tracking-[0.25em] border-b border-[#3d352b] pb-10 inline-block px-10 md:px-24">
+                        {{ $nombreColeccion }}
+                    </h2>
                 </div>
-            </div>
-            </div>
-    </section>
+
+                <div class="flex flex-col items-center gap-52">
+                    @foreach($obras as $obra)
+                        <div class="w-[95%] md:w-[55%] bg-[#282119] py-16 px-8 md:px-16 rounded-[32px] border border-[#3d352b] shadow-[0_40px_80px_-15px_rgba(0,0,0,0.5)] transition-all duration-700 hover:border-[#c9973a]/40">
+                            
+                            <div class="w-full h-[400px] md:h-[560px] bg-[#332b22] rounded-xl mb-12 overflow-hidden shadow-xl">
+                                @if($obra->imagen)
+                                    <img src="{{ $obra->imagen }}" 
+                                        alt="{{ $obra->titulo }}" 
+                                        class="w-full h-full object-cover transition-transform duration-1000 hover:scale-105">
+                                @else
+                                    <div class="w-full h-full flex items-center justify-center">
+                                        <span class="text-[#3d352b] text-xs uppercase tracking-widest italic">Sense Imatge</span>
+                                    </div>
+                                @endif
+                            </div>
+
+                            <div class="text-center max-w-xl mx-auto">
+                                <h3 class="text-2xl md:text-4xl font-light mb-3 uppercase tracking-[0.12em] text-white">
+                                    {{ $obra->titulo }}
+                                </h3>
+                                
+                                <p class="text-[#a0937f] text-base md:text-lg mb-8 italic tracking-wide">
+                                    Ainoa Sillero
+                                </p>
+
+                                <div class="flex flex-col items-center gap-6">
+                                    <div class="flex flex-col md:flex-row items-center gap-4 md:gap-10">
+                                        <span class="text-[#c9973a] text-2xl md:text-3xl font-light">
+                                            {{ number_format($obra->precio, 0, ',', '.') }}€
+                                        </span>
+
+                                        @if($obra->disponible)
+                                            <div class="flex items-center gap-2.5">
+                                                <span class="w-2 h-2 bg-[#00c950] rounded-full shadow-[0_0_8px_#00c950]"></span>
+                                                <span class="text-[#00c950] text-[10px] md:text-xs uppercase tracking-[0.25em]">Disponible</span>
+                                            </div>
+                                        @else
+                                            <span class="text-[#fb2c36] text-[10px] md:text-xs uppercase tracking-[0.25em] border border-[#fb2c36]/30 px-3 py-1">Venut</span>
+                                        @endif
+                                    </div>
+
+                                    <a href="{{ route('obras.show', $obra->id) }}" 
+                                    class="mt-6 px-12 py-4 border border-[#3d352b] text-[#a0937f] text-xs uppercase tracking-[0.35em] hover:bg-[#c9973a] hover:text-black hover:border-[#c9973a] transition-all duration-500 rounded-full">
+                                        Veure Detall
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </section>
+        @endforeach
+    </div>
 </div>
+
 @endsection
