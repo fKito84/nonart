@@ -23,33 +23,63 @@
                 <article class="w-[95%] md:w-[55%] flex flex-col items-center">
                     
                     <div class="text-center space-y-4 mb-16">
-                        <h1 class="text-4xl md:text-5xl font-light uppercase tracking-wide">{{ $taller->nom }}</h1>
-                        <p class="text-[#a0937f] text-3xl md:text-3xl text-sm italic">{{ number_format($taller->duracio_hores, 1) }} Hores d'immersió</p>
+                        <h1 class="text-4xl md:text-5xl font-light uppercase tracking-wide">
+                                {{ $taller->nom }}</h1>
+                        <p class="text-[#a0937f] text-3xl md:text-3xl text-sm italic">
+                            {{ number_format($taller->duracio_hores, 1) }} Hores d'immersió</p>
                     </div>
 
-                    <div class="w-full bg-[#282119] border border-[#3d352b] rounded-[32px] p-8 md:p-12 shadow-2xl">
-                        <div class="max-w-xl mx-auto">
-                            <form action="#" class="space-y-8">
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="w-full bg-[#282119] border border-[#3d352b] rounded-[40px] p-10 md:p-16 shadow-2xl mt-4">
+                        <div class="max-w-3xl mx-auto">
+                            <form action="carrito" method="POST" class="space-y-8">
+                                @csrf
+                                <input type="hidden" name="taller_id" value="{{ $taller->id }}">
+
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                    
                                     <div>
-                                        <label class="block text-[#c9973a] text-[15px] uppercase tracking-[3px] mb-2 text-center md:text-left">Data:</label>
-                                        <input type="text" 
-                                            class="datepicker-input w-full bg-[#332b22] border border-[#3d352b] text-white text-[12px] rounded-xl px-5 py-3 focus:outline-none focus:border-[#c9973a]" 
+                                        <label class="block text-[#c9973a] text-[18px] uppercase tracking-[3px] 
+                                                        mb-2 text-center md:text-left">Data:</label>
+                                        <input type="text" name="fecha" required
+                                            class="datepicker-input w-full bg-[#332b22] border border-[#3d352b] 
+                                                    text-white text-[12px] rounded-xl px-5 py-3 focus:outline-none focus:border-[#c9973a]" 
                                             id="fecha_taller_{{ $taller->id }}" 
                                             data-taller-id="{{ $taller->id }}"
                                             placeholder="Selecciona dia">
                                     </div>
+                                    
                                     <div>
-                                        <label class="block text-[#c9973a] text-[15px] uppercase tracking-[3px] mb-2 text-center md:text-left">Horari:</label>
-                                        <select id="horari_taller_{{ $taller->id }}" class="w-full bg-[#332b22] border border-[#3d352b] text-white text-[12px] rounded-xl px-5 py-3 focus:outline-none focus:border-[#c9973a] appearance-none">
-                                            <option value="">Selecciona data primer</option>
+                                        <label class="block text-[#c9973a] text-[18px] uppercase tracking-[3px] mb-2 
+                                                    text-center md:text-left">Horari:</label>
+                                        <select name="horari" required id="horari_taller_{{ $taller->id }}"
+                                            class="w-full bg-[#332b22] border  border-[#3d352b] text-white text-[12px] rounded-xl px-5 py-3 
+                                                        focus:outline-none focus:border-[#c9973a] appearance-none">
+                                            <option value="">Selecciona data</option>
                                         </select>
                                     </div>
-                                </div>
 
-                                <button type="submit" class="w-full py-5 bg-[#c9973a] text-black rounded-full text-xs uppercase tracking-[4px] font-bold hover:bg-[#e6ae42] transition-all">
-                                    Reservar per {{ $taller->preu }}€
-                                </button>
+                                    <div>
+                                        <label class="block text-[#c9973a] text-[18px] uppercase tracking-[3px] mb-2 text-center md:text-left">Places reserva :</label>
+                                        <select name="cantidad" required class="w-full bg-[#332b22] border border-[#3d352b] text-white text-[12px]
+                                                                                 rounded-xl px-5 py-3 focus:outline-none focus:border-[#c9973a] appearance-none">
+                                            @for ($i = 1; $i <= $taller->capacitat_max; $i++)
+                                                <option value="{{ $i }}">{{ $i }} {{ $i == 1 ? 'Persona' : 'Persones' }}</option>
+                                            @endfor
+                                        </select>
+                                    </div>
+
+                                </div>
+                                @auth
+                                    <button type="submit" class="w-full py-6 bg-[#c9973a] text-black rounded-full text-sm uppercase tracking-[4px] font-bold hover:bg-[#e6ae42] transition-all shadow-lg hover:-translate-y-1 transform duration-300 mt-4">
+                                        Reservar per {{ number_format($taller->preu, 0) }}€ / Persona
+                                    </button>
+                                @endauth
+
+                                @guest
+                                    <a href="/login" class="block text-center w-full py-6 bg-[#3d352b] text-[#c9973a] rounded-full text-sm uppercase tracking-[4px] font-bold border border-[#3d352b] hover:bg-[#1e1914] transition-all shadow-lg mt-4">
+                                        Inicia sessió per reservar
+                                    </a>
+                                @endguest
                             </form>
                         </div>
                     </div>

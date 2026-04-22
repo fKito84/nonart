@@ -24,6 +24,20 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin',
             'phone' => '637703754',
         ]);
+        \App\Models\User::create([
+            'name' => 'Marta',
+            'email' => 'marta.agullo.online@mataro.epiaedu.cat',
+            'password' => Hash::make('projecte'),
+            'role' => 'client',
+            'phone' => '637799999',
+        ]);
+        \App\Models\User::create([
+            'name' => ' Fran',
+            'email' => 'alu.francisco.munoz@mataro.epiaedu.cat',
+            'password' => Hash::make('projecte'),
+            'role' => 'client',
+            'phone' => '637799994',
+        ]);
 
         // OBRAS 2 COLECCIONES
         $obrasVidas = [
@@ -113,6 +127,7 @@ class DatabaseSeeder extends Seeder
             'nom' => 'Art and Wine',
             'descripcio' => 'Taller de pintura acrílica amb pica pica y vi per amenitzar el taller,
                              per compartir amb amics o invidual i disfrutar d\'aquesta experiencia unica .',
+            'tecnica' => 'oleo',
             'duracio_hores' => 2.5,
             'capacitat_max' => 20,
             'preu' => 35.00,
@@ -122,6 +137,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\Taller::create([
             'nom' => 'Pintura Acrílica per a Nens',
             'descripcio' => 'Taller creatiu enfocat a els mes petits per l\'exploració del color.',
+            'tecnica' => 'acrilica',
             'duracio_hores' => 2.5,
             'capacitat_max' => 10,
             'preu' => 20.00,
@@ -129,8 +145,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
         \App\Models\Taller::create([
-            'nom' => 'Taller Acuarel.les',
+            'nom' => 'Taller Aquareles',
             'descripcio' => 'Introducció a les técniques de transparencia y aigua amb acuarel.la.',
+            'tecnica' => 'Aquarela',
             'duracio_hores' => 2.5,
             'capacitat_max' => 20,
             'preu' => 25.00,
@@ -140,38 +157,38 @@ class DatabaseSeeder extends Seeder
         /// STOCK
         $materials = [
 
-            ['nom_material' => 'Pincel redondo #2', 'descripcio' => 'Pincel de detalle', 'quantitat' => 35, 'reutilitzable' => true, 'preu_unitat' => 3.50],
-            ['nom_material' => 'Pincel plano #8', 'descripcio' => 'Pincel para fondos y trazos rectos', 'quantitat' => 35, 'reutilitzable' => true, 'preu_unitat' => 4.20],
-            ['nom_material' => 'Pincel lengua de gato #10', 'descripcio' => 'Pincel versátil para difuminar', 'quantitat' => 35, 'reutilitzable' => true, 'preu_unitat' => 5.00],
-            ['nom_material' => 'Pincel abanico #4', 'descripcio' => 'Ideal para texturas y follaje', 'quantitat' => 35, 'reutilitzable' => true, 'preu_unitat' => 4.80],
-            ['nom_material' => 'Pincel liner #00', 'descripcio' => 'Pincel extrafino para líneas largas', 'quantitat' => 35, 'reutilitzable' => true, 'preu_unitat' => 2.90],
+            ['nom_material' => 'Pincel redondo #2', 'descripcio' => 'Pincel de detalle','tecnica' => 'false', 'quantitat' => 35,  'reutilitzable' => true, 'preu_unitat' => 3.50],
+            ['nom_material' => 'Pincel plano #8', 'descripcio' => 'Pincel para fondos y trazos rectos', 'tecnica' => 'false', 'quantitat' => 35, 'reutilitzable' => true, 'preu_unitat' => 4.20],
+            ['nom_material' => 'Pincel lengua de gato #10', 'descripcio' => 'Pincel versátil para difuminar','tecnica' => 'false',  'quantitat' => 35, 'reutilitzable' => true, 'preu_unitat' => 5.00],
+            ['nom_material' => 'Pincel abanico #4', 'descripcio' => 'Ideal para texturas y follaje', 'tecnica' => 'false', 'quantitat' => 35, 'reutilitzable' => true, 'preu_unitat' => 4.80],
+            ['nom_material' => 'Pincel liner #00', 'descripcio' => 'Pincel extrafino para líneas largas', 'tecnica' => 'false', 'quantitat' => 35, 'reutilitzable' => true, 'preu_unitat' => 2.90],
 
-            ['nom_material' => 'Paleta de plástico con pocillos', 'descripcio' => 'Ideal para acrílico y acuarela', 'quantitat' => 35, 'reutilitzable' => true, 'preu_unitat' => 2.50],
-            ['nom_material' => 'Caballete de mesa', 'descripcio' => 'Soporte de madera para lienzos pequeños/medianos', 'quantitat' => 35, 'reutilitzable' => true, 'preu_unitat' => 18.00],
-            ['nom_material' => 'Espátula de metal', 'descripcio' => 'Para mezclar pintura en paleta o texturas', 'quantitat' => 35, 'reutilitzable' => true, 'preu_unitat' => 4.50],
+            ['nom_material' => 'Paleta de plástico con pocillos', 'descripcio' => 'Ideal para acrílico y acuarela', 'tecnica' => 'false',  'quantitat' => 35, 'reutilitzable' => true, 'preu_unitat' => 2.50],
+            ['nom_material' => 'Caballete de mesa', 'descripcio' => 'Soporte de madera para lienzos pequeños/medianos', 'tecnica' => 'false',  'quantitat' => 35, 'reutilitzable' => true, 'preu_unitat' => 18.00],
+            ['nom_material' => 'Espátula de metal', 'descripcio' => 'Para mezclar pintura en paleta o texturas','tecnica' => 'false',  'quantitat' => 35, 'reutilitzable' => true, 'preu_unitat' => 4.50],
 
    
-            ['nom_material' => 'Óleo 12ml - Blanco', 'descripcio' => 'Tubo mini básico', 'quantitat' => 75, 'reutilitzable' => false, 'preu_unitat' => 1.50],
-            ['nom_material' => 'Óleo 12ml - Amarillo', 'descripcio' => 'Tubo mini básico', 'quantitat' => 75, 'reutilitzable' => false, 'preu_unitat' => 1.50],
-            ['nom_material' => 'Óleo 12ml - Rojo', 'descripcio' => 'Tubo mini básico', 'quantitat' => 75, 'reutilitzable' => false, 'preu_unitat' => 1.50],
-            ['nom_material' => 'Óleo 12ml - Azul', 'descripcio' => 'Tubo mini básico', 'quantitat' => 75, 'reutilitzable' => false, 'preu_unitat' => 1.50],
-            ['nom_material' => 'Óleo 12ml - Verde', 'descripcio' => 'Tubo mini básico', 'quantitat' => 75, 'reutilitzable' => false, 'preu_unitat' => 1.50],
-            ['nom_material' => 'Óleo 12ml - Negro', 'descripcio' => 'Tubo mini básico', 'quantitat' => 75, 'reutilitzable' => false, 'preu_unitat' => 1.50],
+            ['nom_material' => 'Óleo 12ml - Blanco', 'descripcio' => 'Tubo mini básico','tecnica' => 'oleo',  'quantitat' => 75, 'reutilitzable' => 75, 'preu_unitat' => 1.50],
+            ['nom_material' => 'Óleo 12ml - Amarillo', 'descripcio' => 'Tubo mini básico','tecnica' =>'oleo',  'quantitat' => 75, 'reutilitzable' => 75, 'preu_unitat' => 1.50],
+            ['nom_material' => 'Óleo 12ml - Rojo', 'descripcio' => 'Tubo mini básico','tecnica' =>'oleo',  'quantitat' => 75, 'reutilitzable' => 75, 'preu_unitat' => 1.50],
+            ['nom_material' => 'Óleo 12ml - Azul', 'descripcio' => 'Tubo mini básico', 'tecnica' =>'oleo', 'quantitat' => 75, 'reutilitzable' =>75 , 'preu_unitat' => 1.50],
+            ['nom_material' => 'Óleo 12ml - Verde', 'descripcio' => 'Tubo mini básico','tecnica' => 'oleo',  'quantitat' => 75, 'reutilitzable' => 75, 'preu_unitat' => 1.50],
+            ['nom_material' => 'Óleo 12ml - Negro', 'descripcio' => 'Tubo mini básico', 'tecnica' =>'oleo', 'quantitat' =>75, 'reutilitzable' => 75, 'preu_unitat' => 1.50],
 
-            ['nom_material' => 'Acrílico 12ml - Blanco', 'descripcio' => 'Tubo mini primario', 'quantitat' => 75, 'reutilitzable' => false, 'preu_unitat' => 1.20],
-            ['nom_material' => 'Acrílico 12ml - Amarillo', 'descripcio' => 'Tubo mini primario', 'quantitat' => 75, 'reutilitzable' => false, 'preu_unitat' => 1.20],
-            ['nom_material' => 'Acrílico 12ml - Rojo', 'descripcio' => 'Tubo mini primario', 'quantitat' => 75, 'reutilitzable' => false, 'preu_unitat' => 1.20],
-            ['nom_material' => 'Acrílico 12ml - Azul', 'descripcio' => 'Tubo mini primario', 'quantitat' => 75, 'reutilitzable' => false, 'preu_unitat' => 1.20],
-            ['nom_material' => 'Acrílico 12ml - Negro', 'descripcio' => 'Tubo mini primario', 'quantitat' => 75, 'reutilitzable' => false, 'preu_unitat' => 1.20],
+            ['nom_material' => 'Acrílico 12ml - Blanco', 'descripcio' => 'Tubo mini primario','tecnica' => 'acrilica',  'quantitat' => 75, 'reutilitzable' => false, 'preu_unitat' => 1.20],
+            ['nom_material' => 'Acrílico 12ml - Amarillo', 'descripcio' => 'Tubo mini primario','tecnica' => 'acrilica', 'quantitat' =>75, 'reutilitzable' => false, 'preu_unitat' => 1.20],
+            ['nom_material' => 'Acrílico 12ml - Rojo', 'descripcio' => 'Tubo mini primario', 'tecnica' =>'acrilica', 'quantitat' => 75, 'reutilitzable' => false, 'preu_unitat' => 1.20],
+            ['nom_material' => 'Acrílico 12ml - Azul', 'descripcio' => 'Tubo mini primario', 'tecnica' =>'acrilica', 'quantitat' => 75, 'reutilitzable' => false, 'preu_unitat' => 1.20],
+            ['nom_material' => 'Acrílico 12ml - Negro', 'descripcio' => 'Tubo mini primario', 'tecnica' => 'acrilica', 'quantitat' => 75, 'reutilitzable' => false, 'preu_unitat' => 1.20],
 
-            ['nom_material' => 'Godet Acuarela - Blanco', 'descripcio' => 'Pastilla formato viaje', 'quantitat' => 75, 'reutilitzable' => false, 'preu_unitat' => 0.90],
-            ['nom_material' => 'Godet Acuarela - Amarillo', 'descripcio' => 'Pastilla formato viaje', 'quantitat' => 75, 'reutilitzable' => false, 'preu_unitat' => 0.90],
-            ['nom_material' => 'Godet Acuarela - Rojo', 'descripcio' => 'Pastilla formato viaje', 'quantitat' => 75, 'reutilitzable' => false, 'preu_unitat' => 0.90],
-            ['nom_material' => 'Godet Acuarela - Azul', 'descripcio' => 'Pastilla formato viaje', 'quantitat' => 75, 'reutilitzable' => false, 'preu_unitat' => 0.90],
-            ['nom_material' => 'Godet Acuarela - Negro', 'descripcio' => 'Pastilla formato viaje', 'quantitat' => 75, 'reutilitzable' => false, 'preu_unitat' => 0.90],
+            ['nom_material' => 'Godet Acuarela - Blanco', 'descripcio' => 'Pastilla formato viaje','tecnica' => 'aquarela',  'quantitat' => 75, 'reutilitzable' => false, 'preu_unitat' => 0.90],
+            ['nom_material' => 'Godet Acuarela - Amarillo', 'descripcio' => 'Pastilla formato viaje', 'tecnica' => 'aquarela', 'quantitat' => 75, 'reutilitzable' => false, 'preu_unitat' => 0.90],
+            ['nom_material' => 'Godet Acuarela - Rojo', 'descripcio' => 'Pastilla formato viaje', 'tecnica' => 'aquarela', 'quantitat' => 75, 'reutilitzable' => false, 'preu_unitat' => 0.90],
+            ['nom_material' => 'Godet Acuarela - Azul', 'descripcio' => 'Pastilla formato viaje', 'tecnica' => 'aquarela', 'quantitat' => 75, 'reutilitzable' => false, 'preu_unitat' => 0.90],
+            ['nom_material' => 'Godet Acuarela - Negro', 'descripcio' => 'Pastilla formato viaje','tecnica' => 'aquarela', 'quantitat' => 75, 'reutilitzable' => false, 'preu_unitat' => 0.90],
 
             
-            ['nom_material' => 'Lienzo 35x25', 'descripcio' => 'Bastidor de madera con tela de algodón imprimada', 'quantitat' => 75, 'reutilitzable' => false, 'preu_unitat' => 4.50],
+            ['nom_material' => 'Lienzo 35x25', 'descripcio' => 'Bastidor de madera con tela de algodón imprimada','tecnica' => 'false',  'quantitat' => 75, 'reutilitzable' => false, 'preu_unitat' => 4.50],
         ];
 
         foreach ($materials as $material) {

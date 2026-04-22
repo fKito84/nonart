@@ -10,7 +10,7 @@ class Taller extends Model
 {
     use HasFactory;
 
-    protected $fillable = [ 'nom','descripcio','duracio_hores','capacitat_max','preu','actiu'];
+    protected $fillable = [ 'nom','descripcio','tecnica','duracio_hores','capacitat_max','preu','actiu'];
 
     protected $casts = [
         'preu' => 'decimal:2',
@@ -21,6 +21,6 @@ class Taller extends Model
 
     public function reserves()
     {
-        // return $this->hasMany(ReservaTaller::class);
+        return $this->hasMany(ReservaTaller::class);
     }
 }

@@ -9,7 +9,7 @@ class Stock extends Model
 {
     use HasFactory;
 
-    protected $fillable = [ 'nom_material', 'descripcio','quantitat','quantitat_minima','preu_unitat',
+    protected $fillable = [ 'nom_material', 'descripcio','tecnica','quantitat','quantitat_minima','preu_unitat',
                             'proveidor','reutilitzable' ];
 
     protected $casts = [

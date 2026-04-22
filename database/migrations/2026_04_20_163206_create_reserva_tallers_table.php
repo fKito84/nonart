@@ -8,10 +8,11 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('reserves_tallers', function (Blueprint $table) {
+        Schema::create('reserva_tallers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('restrict'); 
             $table->foreignId('taller_id')->constrained('tallers')->onDelete('restrict'); 
+            $table->integer('personas_reserva')->default(1);
             $table->dateTime('data_taller'); 
             $table->enum('estat', ['pendent', 'confirmada', 'cancel lada'])->default('pendent'); 
             $table->text('notes')->nullable(); 

@@ -5,7 +5,7 @@
 <div class="space-y-20">
     <div class="text-center">
         <span class="text-[#c9973a] text-[30px] uppercase tracking-[5px]">Col·lecció Completa</span>
-        <h1 class="text-4xl mt-4 uppercase tracking-tighter">Obres d'art</h1>
+        <h1 class="text-4xl mt-4  tracking-[5px]">Obres d'art</h1>
     </div>
     <section class="relative h-[400px] md:h-[600px] rounded-3xl overflow-hidden flex items-center justify-center text-center px-6">
         <img src="/images/exposiciones/museu_pell2.jpeg" 
@@ -13,21 +13,20 @@
             class="absolute inset-0 w-full h-full object-cover">
 
         <div class="absolute inset-0 bg-black/40 rounded-3xl  "></div>
-
-        <div class="relative z-20 max-w-xl">
-            <span class="text-[#c9973a] text-[60px] tracking-[5px] uppercase 
-                        [-webkit-text-stroke:0.01px_black]  font-bold">Ainoa Sillero Bernaldez</span>
-            <h1 class="text-4xl md:text-6xl mt-4 mb-6 [-webkit-text-stroke:0.3px_black]">Obres creades</h1>
-            <p class="text-[#f2ede6] text-[22px] leading-relaxed [-webkit-text-stroke:0.3px_black]">
-                Endinsat en la meva col.lecció d'art.
-            </p>
-        </div>
     </section>
+    <div class="text-center">
+        <span class="text-[#c9973a] text-[30px] uppercase tracking-[5px]">Ainoa Sillero Bernaldez</span>
+        <h1 class="text-4xl mt-4 uppercase tracking-tighter">Obres creades</h1>
+        </br>
+        <p class="text-[#f2ede6] text-[28px] leading-relaxed [-webkit-text-stroke:0.6px_black]">
+            Endinsat en la meva col.lecció d'art.
+        </p>
+    </div>
 
     <div class="container mx-auto py-20">
         @foreach($obrasAgrupadas as $nombreColeccion => $obras)
             <section class="mb-52"> <div class="text-center mb-24">
-                    <span class="text-[#a0937f] text-xs uppercase tracking-[0.5em] block mb-3">COLECCIÓ</span>
+                    <span class="text-[#a0937f] text-[35px] uppercase tracking-[0.5em] block mb-3">COLECCIÓ</span>
                     <h2 class="text-[#c9973a] text-4xl md:text-5xl uppercase tracking-[0.25em] border-b border-[#3d352b] pb-10 inline-block px-10 md:px-24">
                         {{ $nombreColeccion }}
                     </h2>
@@ -74,7 +73,7 @@
                                         @endif
                                     </div>
 
-                                    <a href="{{ route('obras.show', $obra->id) }}" 
+                                    <a href="/obras/{{$obra->id}}" 
                                     class="mt-6 px-12 py-4 border border-[#3d352b] text-[#a0937f] text-xs uppercase tracking-[0.35em] hover:bg-[#c9973a] hover:text-black hover:border-[#c9973a] transition-all duration-500 rounded-full">
                                         Veure Detall
                                     </a>

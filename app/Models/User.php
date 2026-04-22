@@ -17,7 +17,7 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
-    protected $fillable = ['name', 'email','password', 'phone', 'rol',  ];
+    protected $fillable = ['name', 'email','password', 'phone', 'role',  ];
 
     
      // atributos que deben estar ocultos 
@@ -43,14 +43,14 @@ class User extends Authenticatable
         ];
     }
 
-    public function reserves_tallers()
+    public function reserva_tallers()
     {
-        // 
-        // return $this->hasMany(ReservaTaller::class);
+        
+        return $this->hasMany(ReservaTaller::class);
     }
 
-    public function compres()
+    public function compras()
     {
-        // return $this->hasMany(Venda::class);
+        return $this->hasMany(Venda::class);
     }
 }

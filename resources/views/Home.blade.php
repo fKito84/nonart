@@ -3,35 +3,40 @@
 
 @section('content')
 <div class="space-y-24">
+    <div class="text-center">
+        <span class="text-[#c9973a] text-[40px] uppercase tracking-[5px]">Taller Destacat</span>
+        <h1 class="text-4xl mt-4 uppercase tracking-tighter">Art and Wine</h1>
+        </br>
+        <p class="text-[#f2ede6] text-[28px] leading-relaxed [-webkit-text-stroke:0.6px_black]">
+            Descobreix la nostra experiència: 
+        </p>
+        <p class="text-[#f2ede6] text-[28px] leading-relaxed [-webkit-text-stroke:0.6px_black]">
+            gaudeix de la pintura i el vi en un ambient creatiu i únic.
+        </p>
+    </div>
     <section class="relative h-[400px] md:h-[600px] rounded-3xl overflow-hidden flex items-center justify-center text-center px-6">
         <img src="/images/talleres/fotoTaller.png" 
             alt="Fons Hero Nonart" 
             class="absolute inset-0 w-full h-full object-cover">
 
         <div class="absolute inset-0 bg-black/40 rounded-3xl  "></div>
-
-        <div class="relative z-20 max-w-xl">
-            <span class="text-[#c9973a] text-[60px] tracking-[5px] uppercase 
-                        [-webkit-text-stroke:0.3px_black]  font-bold">Taller Destacat</span>
-            <h1 class="text-4xl md:text-6xl mt-4 mb-6 [-webkit-text-stroke:0.6px_black]">Art and Wine</h1>
-            <p class="text-[#f2ede6] text-xl leading-relaxed [-webkit-text-stroke:0.6px_black]">
-                Descobreix la nostra experiència: gaudeix de la pintura i el vi en un ambient creatiu i únic.
-            </p>
-        </div>
     </section>
 
     <section>
         <div class="text-center mb-12">
-            <span class="text-[#c9973a] text-[30px] uppercase tracking-widest">Col·lecció</span>
-            <h2 class="text-3xl mt-2">Obres d'art</h2>
+            <span class="text-[#c9973a] text-[40px] uppercase tracking-widest">Col·lecció</span>
+            <h2 class="text-4xl mt-2">Obres d'art</h2>
         </div>
-        <div class="carrusel-obras cursor-grab flex overflow-x-auto gap-8 pb-8 snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        <div class="carrusel-obras cursor-grab flex overflow-x-auto gap-8 pb-8 snap-x snap-mandatory 
+                [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             
            @foreach($obras as $obra)     
-                <div class="bg-[#282119] border border-[#3d352b] rounded-2xl overflow-hidden group min-w-[380px] w-[380px] shrink-0 snap-center flex flex-col">
+                <div class="bg-[#282119] border border-[#3d352b] rounded-2xl overflow-hidden 
+                        group min-w-[380px] w-[380px] shrink-0 snap-center flex flex-col">
                     
                     <div class="h-96 bg-[#332b22] relative overflow-hidden shrink-0">
-                        <img src="{{ $obra->imagen }}" alt="{{ $obra->titulo }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <img src="{{ $obra->imagen }}" alt="{{ $obra->titulo }}" class="w-full h-full object-cover
+                                     group-hover:scale-110 transition-transform duration-500">
                     </div>
                     
                     <div class="p-8 flex flex-col flex-1">
@@ -42,7 +47,8 @@
                         
                         <p class="text-[#a0937f] text-base mb-8">Ainoa Sillero</p> 
                         
-                        <a href="/detallObra/{{ $obra->id }}" class="mt-auto mb-5 block w-full text-center py-4 bg-[#332b22] border border-[#3d352b] text-[#ddd2c0] 
+                        <a href="/obras/{{$obra->id}}" class="mt-auto mb-5 block w-full text-center py-4 bg-[#332b22] 
+                            border border-[#3d352b] text-[#ddd2c0] 
                             rounded-lg text-sm uppercase tracking-widest hover:bg-[#c9973a] hover:text-[#1e1914] 
                             transition-colors">Veure Detall</a>
                     </div>
@@ -66,12 +72,13 @@
             </div>
 
             <div class="relative w-full max-w-[1200px] h-[800px] rounded-3xl overflow-hidden group">
-                <img src="/images/talleres/llocTaller.png" alt="Taller Art and Wine" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                <img src="/images/talleres/llocTaller.png" alt="Taller Art and Wine" class="w-full h-full object-cover
+                             group-hover:scale-110 transition-transform duration-500">
             </div>
             
             <div class="bg-[#282119] max-w-[800px] h-[200px] p-8 border border-[#3d352b] rounded-3xl  items-center w-full mx-auto py-8">
                 <h3 class="text-xl mb-4">ART and Wine <br><span class="text-[#a0937f] text-sl">experiència única</span></h3>
-                
+                </br>
                 <a href="/talleres" class="inline-block py-3 px-8 bg-[#c9973a] text-[#1e1914] 
                                 rounded-lg text-xs uppercase tracking-widest hover:bg-white transition-colors">
                     Veure Taller

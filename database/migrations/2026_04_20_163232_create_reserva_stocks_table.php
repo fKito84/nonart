@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('reservas_stocks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('reserva_id')->constrained('reserves_tallers')->onDelete('cascade'); // [cite: 120, 232, 316]
+            $table->foreignId('reserva_id')->constrained('reserva_tallers')->onDelete('cascade'); // [cite: 120, 232, 316]
             $table->foreignId('stock_id')->constrained('stocks')->onDelete('restrict'); // [cite: 121, 233, 317]
             $table->integer('quantitat_consumida'); // [cite: 122, 234, 313]
             $table->timestamps();

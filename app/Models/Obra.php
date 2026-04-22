@@ -17,13 +17,10 @@ class Obra extends Model
         'disponible' => 'boolean',
     ];
 
-    /**
-     * Relación: Una obra puede estar en muchas ventas (si haces copias o láminas).
-     * Si es obra única, igual cuenta como una venta en tu tabla 'vendes'.
-     */
+  
     public function venda()
     {
-        // asociacion de la clase venda 
-        // return $this->hasMany(Venda::class); 
+        
+        //return $this->hasMany(Venda::class); 
     }
 }

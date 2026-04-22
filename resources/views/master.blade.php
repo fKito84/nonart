@@ -46,20 +46,41 @@
 
         <div class="flex items-center gap-5 lg:gap-7">
     
-            <a href="/login" class="text-[#f2ede6] hover:text-[#c9973a] transition-colors flex items-center">
-                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-            </a>
+            @guest
+                <a href="/login" class="text-[#f2ede6] hover:text-[#c9973a] transition-colors flex items-center">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
+                     stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </a>
+            @endguest
             
-            <a href="/carrito" class="text-[#f2ede6] hover:text-[#c9973a] transition-colors relative flex items-center">
-                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+            @auth
+            <a href="{{ route('carrito.index') }}" class="text-[#f2ede6] hover:text-[#c9973a] 
+                    transition-colors relative flex items-center group">
+                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" 
+                        stroke-linejoin="round" viewBox="0 0 24 24" class="transform group-hover:scale-110 
+                            transition-transform duration-300">
                     <circle cx="9" cy="21" r="1"></circle>
                     <circle cx="20" cy="21" r="1"></circle>
                     <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
                 </svg>
+
+                @if(session()->has('carrito') && count(session('carrito')) > 0)
+                    @php
+                        //Sumamos las cantidades de todos los artículos en el carrito
+                        $totalArticulos = array_sum(array_column(session('carrito'), 'cantidad'));
+                    @endphp
+                    
+                    <span class="absolute -top-2 -right-3 bg-[#c9973a] text-[#1e1914] text-[10px] font-bold w-5 h-5 flex 
+                            items-center justify-center rounded-full border-2 border-[#1e1914] shadow-lg animate-pulse">
+                        {{ $totalArticulos }}
+                    </span>
+                @endif
             </a>
+            @endauth
+            
             
             <button id="menuBtn" class="text-[#f2ede6] hover:text-[#c9973a] transition-colors flex items-center">
                 <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
@@ -72,7 +93,8 @@
         </div>
     </nav>
 
-    <div id="sideMenu" class="fixed top-0 right-0 h-full w-[80%] md:w-[25%] bg-[#1e1914] z-[60] flex flex-col items-center pt-24 translate-x-full transition-transform duration-300 shadow-2xl border-l border-[#3d352b]">
+    <div id="sideMenu" class="fixed top-0 right-0 h-full w-[80%] md:w-[25%] bg-[#1e1914] z-[60] flex flex-col items-center
+         pt-24 translate-x-full transition-transform duration-300 shadow-2xl border-l border-[#3d352b]">
         
         <button id="closeMenu" class="absolute top-6 right-6 text-[#f2ede6] text-xs tracking-widest hover:text-[#c9973a]">TANCAR</button>
         
@@ -80,14 +102,46 @@
             <a href="/home" class="hover:text-[#c9973a] transition-colors">Inici</a>
             <a href="/obras" class="hover:text-[#c9973a] transition-colors">Obres d'art</a>
             <a href="/talleres" class="hover:text-[#c9973a] transition-colors">Tallers</a>
-            <a href="/carrito" class="hover:text-[#c9973a] transition-colors">Carret de la compra</a>
-            <a href="/usuari" class="hover:text-[#c9973a] transition-colors">Conta d'usuari</a>
-            
-            <a href="/home" class="text-xm mt-19 opacity-50 hover:opacity-100 transition-opacity">SORTIR</a>
+            @auth
+                <a href="/carrito" class="hover:text-[#c9973a] transition-colors">Cistell de la compra</a>
+                <a href="/usuario" class="hover:text-[#c9973a] transition-colors">Conta d'usuari</a>
+                
+                <form method="POST" action="{{ route('logout') }}" class="mt-19">
+                    @csrf
+                    <button type="submit" class="text-xm opacity-50 hover:opacity-100 transition-opacity uppercase cursor-pointer">
+                        SORTIR
+                    </button>
+                </form>
+            @endauth
+
+            @guest
+                <a href="/login" class="text-[#c9973a] mt-10 hover:text-white transition-colors">Iniciar Sessió</a>
+            @endguest
         </div>
     </div>
+    <main class="flex-grow pt-[100px] w-full max-w-7xl mx-auto px-6">    
+        <div class="max-w-4xl mx-auto px-4 mt-6">
+            @if(session('success'))
+                <div class="bg-[#00c950]/10 border border-[#00c950] text-[#00c950] px-6 py-4 rounded-lg flex items-center justify-between shadow-lg mb-6">
+                    <span class="text-sm tracking-widest uppercase">{{ session('success') }}</span>
+                    <button onclick="this.parentElement.style.display='none'" class="text-[#00c950] hover:text-white transition-colors">✕</button>
+                </div>
+            @endif
 
-    <main class="flex-grow pt-[100px] w-full max-w-7xl mx-auto px-6">
+            @if(session('error'))
+                <div class="bg-[#fb2c36]/10 border border-[#fb2c36] text-[#fb2c36] px-6 py-4 rounded-lg flex items-center justify-between shadow-lg mb-6">
+                    <span class="text-sm tracking-widest uppercase">{{ session('error') }}</span>
+                    <button onclick="this.parentElement.style.display='none'" class="text-[#fb2c36] hover:text-white transition-colors">✕</button>
+                </div>
+            @endif
+
+            @if(session('info'))
+                <div class="bg-[#c9973a]/10 border border-[#c9973a] text-[#c9973a] px-6 py-4 rounded-lg flex items-center justify-between shadow-lg mb-6">
+                    <span class="text-sm tracking-widest uppercase">{{ session('info') }}</span>
+                    <button onclick="this.parentElement.style.display='none'" class="text-[#c9973a] hover:text-white transition-colors">✕</button>
+                </div>
+            @endif
+        </div>
         @yield('content')
     </main>
     <footer class="bg-[#282119] border-t border-[#3d352b] py-12 px-6 mt-20">
@@ -99,16 +153,18 @@
                     <li><a href="/home" class="hover:text-white transition-colors text-[20px]">Inici</a></li>
                     <li><a href="/obras" class="hover:text-white transition-colors text-[20px]">Obres d'art</a></li>
                     <li><a href="/talleres" class="hover:text-white transition-colors text-[20px]">Tallers</a></li>
-                    <li><a href="/usuari" class="hover:text-white transition-colors text-[20px]">El meu compte</a></li>
+                    @auth
+                        <li><a href="/usuario" class="hover:text-white transition-colors text-[20px]">El meu compte</a></li>
+                    @endauth
                 </ul>
             </div>
             
             <div class="flex flex-col items-center">
                 <h4 class="text-[#c9973a] tracking-widest uppercase mb-6 text-[30px]">Ajuda</h4>
                 <ul class="text-[#a0937f] text-xs flex flex-col items-center gap-6">
-                    <li><a href="#" class="hover:text-white transition-colors text-[20px]">Contacte</a></li>
-                    <li><a href="#" class="hover:text-white transition-colors text-[20px]">Preguntes freqüents</a></li>
-                    <li><a href="#" class="hover:text-white transition-colors text-[20px]">Enviaments</a></li>
+                    <li><a href="/informacion" class="hover:text-white transition-colors text-[20px]">Contacte</a></li>
+                    <li><a href="/informacion" class="hover:text-white transition-colors text-[20px]">Preguntes freqüents</a></li>
+                    <li><a href="/informacion" class="hover:text-white transition-colors text-[20px]">Enviaments</a></li>
                 </ul>
             </div>
             

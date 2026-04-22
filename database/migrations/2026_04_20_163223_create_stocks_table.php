@@ -6,15 +6,14 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+
     public function up(): void
     {
         Schema::create('stocks', function (Blueprint $table) {
             $table->id();
             $table->string('nom_material'); 
             $table->text('descripcio')->nullable(); 
+            $table->enum('tecnica', ['oleo', 'acrilica', 'aquarela','false'])->default('false'); ; 
             $table->integer('quantitat')->default(0); 
             $table->integer('quantitat_minima')->default(0); 
             $table->decimal('preu_unitat', 8, 2); 

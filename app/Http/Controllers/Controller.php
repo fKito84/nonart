@@ -14,4 +14,10 @@ class Controller
     function redireccion() {
         return redirect('/');
     }
+
+    //Carrego vista informació
+    function informacion() {
+        
+        return view('informacion');
+    }
 }
