@@ -9,13 +9,23 @@ class Stock extends Model
 {
     use HasFactory;
 
-    protected $fillable = [ 'nom_material', 'descripcio','tecnica','quantitat','quantitat_minima','preu_unitat',
+    protected $fillable = [ 'nom_material', 'descripcio','tecnica','quantitat','preu_unitat',
                             'proveidor','reutilitzable' ];
 
     protected $casts = [
         'quantitat' => 'integer',
-        'quantitat_minima' => 'integer',
         'preu_unitat' => 'decimal:2',
         'reutilitzable' => 'boolean', 
     ];
+
+    
+    public function tallers()
+    {
+        return $this->belongsToMany(Taller::class, 'taller_stock')
+                    ->withPivot('quantitat_per_persona');
+    }
+    public function reservaStocks()
+    {
+        return $this->hasMany(ReservaStock::class, 'stock_id');
+    }
 }

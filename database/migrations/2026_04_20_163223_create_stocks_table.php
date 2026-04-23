@@ -13,9 +13,8 @@ return new class extends Migration
             $table->id();
             $table->string('nom_material'); 
             $table->text('descripcio')->nullable(); 
-            $table->enum('tecnica', ['oleo', 'acrilica', 'aquarela','false'])->default('false'); ; 
+            $table->enum('tecnica', ['oleo', 'acrilica', 'aquarela','false'])->default('false');
             $table->integer('quantitat')->default(0); 
-            $table->integer('quantitat_minima')->default(0); 
             $table->decimal('preu_unitat', 8, 2); 
             $table->string('proveidor')->nullable(); 
             // he afegit aquet camp per el material reutilitable com els caballets

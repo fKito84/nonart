@@ -13,8 +13,12 @@ class AuthController extends Controller
 {
     public function verUsuario()
     {
-        // Obtenemos el usuario con las compras y resrvas que tiene
-        $usuario = User::with(['compras.obra', 'reserva_tallers.tallers'])->find(Auth::id());
+        // Carreguem les compres que ha fet
+        $usuario = User::with([
+            'compras.detalls.obra', 
+            'reserva_tallers.taller' 
+        ])->find(Auth::id());
+
         return view('usuario', compact('usuario'));
     }
     ///METODOS PARA EL LOGUIN

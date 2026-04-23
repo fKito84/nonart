@@ -17,10 +17,8 @@ class Obra extends Model
         'disponible' => 'boolean',
     ];
 
-  
-    public function venda()
+    public function detalls()
     {
-        
-        //return $this->hasMany(Venda::class); 
+        return $this->hasMany(DetalleVenda::class, 'article_id'); 
     }
 }

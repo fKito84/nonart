@@ -12,7 +12,7 @@ class ReservaStock extends Model
    
     protected $table = 'reservas_stocks';
 
-    protected $fillable = ['reserva_id','stock_id', 'quantitat', 'estat' ];
+    protected $fillable = ['reserva_id','stock_id', 'quantitat_consumida'];
 
     // RELACIONS
 

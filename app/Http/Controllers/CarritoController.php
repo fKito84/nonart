@@ -6,14 +6,13 @@ use Illuminate\Http\Request;
 use App\Models\Obra;
 use App\Models\Taller;
 use App\Models\Venda;
+use App\Models\detalleVenda;
 use App\Models\ReservaTaller; 
 use Illuminate\Support\Facades\Auth;
 
 class CarritoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         // carguem el carret amb les dades del session
@@ -107,16 +106,7 @@ class CarritoController extends Controller
 
         return back()->with('error', 'No s\'ha pogut identificar l\'article.');
     }
-   
-    public function show(string $id)
-    {
-        //
-    }
-
-    /*
-      No es pot editar desde el carret ni actualitzar
     
-    */
    
     public function destroy(string $id)
     {
@@ -133,42 +123,87 @@ class CarritoController extends Controller
     
     public function procesarPago(Request $request)
     {
+        //Agafo el cistell
         $carrito = session()->get('carrito', []);
+        if (empty($carrito)) return redirect()->back()->with('error', 'Cistell buit');
 
-        if (empty($carrito)) {
-            return redirect()->route('carrito.index')->with('error', 'El teu carret està buit.');
+        // Calculem el total
+        $totalComanda = 0;
+        $totalArticles = 0;
+        foreach($carrito as $item) {
+            $totalComanda += $item['precio'] * $item['cantidad'];
+            $totalArticles += $item['cantidad'];
         }
-        // comfirmacio autoritzat
-        $userId = Auth::id(); 
+
+        // Creo la venda a la taula
+        $venda = Venda::create([
+            'user_id'         => Auth::id(),
+            'quantitat_total' => $totalArticles,
+            'total_comanda'   => $totalComanda,
+            'metode_pagament' => 'targeta', 
+            'estat'           => 'pagat'
+        ]);
+
+        // Fico el detall de cada article a la taula detall_venda
         foreach ($carrito as $item) {
+            
+           
+            DetalleVenda::create([
+                'venda_id'      => $venda->id,
+                'tipus_article' => $item['tipo'],
+                'article_id'    => $item['id'],
+                'quantitat'     => $item['cantidad'],
+                'preu_unitat'   => $item['precio'],
+                'subtotal'      => $item['precio'] * $item['cantidad']
+            ]);
+            // actualitzo l'obra el estat
             if ($item['tipo'] == 'obra') {
-                Venda::create([
-                    'user_id' => $userId,
-                    'obra_id' => $item['id'],
-                    'preu_final' => $item['precio'],
-                    'data_venda' => now(),
-                    'estat_enviament' => 'pendent'
+                $obra = Obra::find($item['id']);
+                if ($obra) {
+                    $obra->disponible = false; 
+                    $obra->save();
+                }
+            }
+
+            if ($item['tipo'] == 'taller') {
+                // Buscamos el taller para saber su técnica
+                $taller = Taller::find($item['id']);
+
+                // mirem si hi ha una resrva amb la mateixa datai comprovo 
+                // el total de persones apuntades per canviar l'estat
+                // aixo hem servira despres per asignar colors al calendari amb l'estat de la reserva
+                $totalApuntados = ReservaTaller::where('taller_id', $item['id'])
+                    ->where('data_taller', $item['detalles']['fecha'])
+                    ->sum('personas_reserva');
+
+                $nuevoTotal = $totalApuntados + $item['cantidad'];
+                $estadoReserva = ($nuevoTotal >= 8) ? 'confirmat' : 'pendent';
+
+                // Creo la reserva
+                $reserva = ReservaTaller::create([
+                    'user_id'          => Auth::id(),
+                    'taller_id'        => $item['id'],
+                    'personas_reserva' => $item['cantidad'], 
+                    'data_taller'      => $item['detalles']['fecha'], 
+                    'estat'            => $estadoReserva, 
+                    'notes'            => $item['detalles']['horari'] ?? null
                 ]);
 
-            } elseif ($item['tipo'] == 'taller') {
-            //resrvar taller
-            $reserva = ReservaTaller::create([
-                'user_id'          => $userId,
-                'taller_id'        => $item['id'],
-                'personas_reserva' => $item['cantidad'], // <-- Guardamos el número real
-                'data_taller'      => $item['detalles']['fecha'], 
-                'estat'            => 'pendent', 
-                'notes'            => $item['detalles']['horari'] // Podemos guardar aquí el horario
-            ]);
+                // Si amb aquesta reserva arribem a 8 actualitzo l'estat de pendent a 
+                // comfirmada ...
+                if ($nuevoTotal >= 8) {
+                    ReservaTaller::where('taller_id', $item['id'])
+                        ->where('data_taller', $item['detalles']['fecha'])
+                        ->update(['estat' => 'confirmada']);
+                }
 
-            // resrvamos los materiales para la reserva stock materiales
-            $reserva->reservarMateriales(); 
+                // Enviem la tecnica i la cantitat de persones per 
+                // la resrva d'stock
+                $reserva->gestionarStock($taller->tecnica, $item['cantidad']); 
+            }
         }
-        }
-        // Buido el cistell 
+
         session()->forget('carrito');
-
-        // Redirigimos al panel del usuario
         return redirect()->route('usuari.index')->with('success', 'Compra realitzada amb èxit!');
     }
 }

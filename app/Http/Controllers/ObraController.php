@@ -19,7 +19,7 @@ class ObraController extends Controller
 
     public function create()
     {
-        // no la desenvolupo fins que no faci la part d'admin
+        // no la desenvolupo fins que no faci la part d'admin o la porti a un hosting...
         //return view ("nuevaObra");
     }
 

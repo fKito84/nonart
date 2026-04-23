@@ -168,12 +168,12 @@ class DatabaseSeeder extends Seeder
             ['nom_material' => 'Espátula de metal', 'descripcio' => 'Para mezclar pintura en paleta o texturas','tecnica' => 'false',  'quantitat' => 35, 'reutilitzable' => true, 'preu_unitat' => 4.50],
 
    
-            ['nom_material' => 'Óleo 12ml - Blanco', 'descripcio' => 'Tubo mini básico','tecnica' => 'oleo',  'quantitat' => 75, 'reutilitzable' => 75, 'preu_unitat' => 1.50],
-            ['nom_material' => 'Óleo 12ml - Amarillo', 'descripcio' => 'Tubo mini básico','tecnica' =>'oleo',  'quantitat' => 75, 'reutilitzable' => 75, 'preu_unitat' => 1.50],
-            ['nom_material' => 'Óleo 12ml - Rojo', 'descripcio' => 'Tubo mini básico','tecnica' =>'oleo',  'quantitat' => 75, 'reutilitzable' => 75, 'preu_unitat' => 1.50],
-            ['nom_material' => 'Óleo 12ml - Azul', 'descripcio' => 'Tubo mini básico', 'tecnica' =>'oleo', 'quantitat' => 75, 'reutilitzable' =>75 , 'preu_unitat' => 1.50],
-            ['nom_material' => 'Óleo 12ml - Verde', 'descripcio' => 'Tubo mini básico','tecnica' => 'oleo',  'quantitat' => 75, 'reutilitzable' => 75, 'preu_unitat' => 1.50],
-            ['nom_material' => 'Óleo 12ml - Negro', 'descripcio' => 'Tubo mini básico', 'tecnica' =>'oleo', 'quantitat' =>75, 'reutilitzable' => 75, 'preu_unitat' => 1.50],
+            ['nom_material' => 'Óleo 12ml - Blanco', 'descripcio' => 'Tubo mini básico','tecnica' => 'oleo',  'quantitat' => 75, 'reutilitzable' => false, 'preu_unitat' => 1.50],
+            ['nom_material' => 'Óleo 12ml - Amarillo', 'descripcio' => 'Tubo mini básico','tecnica' =>'oleo',  'quantitat' => 75, 'reutilitzable' => false, 'preu_unitat' => 1.50],
+            ['nom_material' => 'Óleo 12ml - Rojo', 'descripcio' => 'Tubo mini básico','tecnica' =>'oleo',  'quantitat' => 75, 'reutilitzable' => false, 'preu_unitat' => 1.50],
+            ['nom_material' => 'Óleo 12ml - Azul', 'descripcio' => 'Tubo mini básico', 'tecnica' =>'oleo', 'quantitat' => 75, 'reutilitzable' =>false , 'preu_unitat' => 1.50],
+            ['nom_material' => 'Óleo 12ml - Verde', 'descripcio' => 'Tubo mini básico','tecnica' => 'oleo',  'quantitat' => 75, 'reutilitzable' => false, 'preu_unitat' => 1.50],
+            ['nom_material' => 'Óleo 12ml - Negro', 'descripcio' => 'Tubo mini básico', 'tecnica' =>'oleo', 'quantitat' =>75, 'reutilitzable' => false, 'preu_unitat' => 1.50],
 
             ['nom_material' => 'Acrílico 12ml - Blanco', 'descripcio' => 'Tubo mini primario','tecnica' => 'acrilica',  'quantitat' => 75, 'reutilitzable' => false, 'preu_unitat' => 1.20],
             ['nom_material' => 'Acrílico 12ml - Amarillo', 'descripcio' => 'Tubo mini primario','tecnica' => 'acrilica', 'quantitat' =>75, 'reutilitzable' => false, 'preu_unitat' => 1.20],
@@ -195,8 +195,8 @@ class DatabaseSeeder extends Seeder
             Stock::create([
                 'nom_material' => $material['nom_material'],
                 'descripcio' => $material['descripcio'],
+                'tecnica' => $material['tecnica'],
                 'quantitat' => $material['quantitat'],
-                'quantitat_minima' => $material['reutilitzable'] ? 5 : 15, 
                 'preu_unitat' => $material['preu_unitat'],
                 'proveidor' => 'Abacus', // 
                 'reutilitzable' => $material['reutilitzable'],

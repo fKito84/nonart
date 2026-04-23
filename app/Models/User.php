@@ -6,34 +6,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    /**
-     * 
-     *
-     * @var list<string>
-     */
-    protected $fillable = ['name', 'email','password', 'phone', 'role',  ];
+   
+    protected $fillable = ['name', 'email','password', 'phone', 'role'  ];
 
     
-     // atributos que deben estar ocultos 
-     
-     // @var list<string>
-     
+ 
+   //dades ocultes  
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     *
-     *
-     * @return array<string, string>
-     */
+  
     protected function casts(): array
     {
         return [
@@ -42,15 +30,13 @@ class User extends Authenticatable
             'is_admin' => 'boolean',
         ];
     }
+    public function compras()
+    {
+        return $this->hasMany(Venda::class, 'user_id');
+    }
 
     public function reserva_tallers()
     {
-        
-        return $this->hasMany(ReservaTaller::class);
-    }
-
-    public function compras()
-    {
-        return $this->hasMany(Venda::class);
+        return $this->hasMany(ReservaTaller::class, 'user_id');
     }
 }

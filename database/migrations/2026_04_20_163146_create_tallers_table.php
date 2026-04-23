@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('nom'); 
             $table->text('descripcio')->nullable();
-            $table->enum('tecnica', ['oleo', 'acrilica', 'aquarela','false'])->default('false'); ; 
+            $table->enum('tecnica', ['oleo', 'acrilica', 'aquarela','false'])->default('false');
             $table->decimal('duracio_hores', 8, 2);
             $table->integer('capacitat_minima')->default(8);
             $table->integer('capacitat_max'); 
