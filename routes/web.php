@@ -21,14 +21,14 @@ Route::resource('talleres' , TallerController::class);
 //Rutas del carrito, se gestionan desde su controller
 Route::get('login', [AuthController::class, 'LoginHome'])->name('login');
 Route::post('login', [AuthController::class, 'login'])->name('login.post');
-Route::post('logout', [AuthController::class, 'logout'])->name('logout');
-Route::post('/carrito/pagar', [CarritoController::class, 'procesarPago'])->name('carrito.pagar');
+
+
 //Recuperar contrasenyes 
 
 Route::get('contrasenya', [AuthController::class, 'recuperarContrasenya'])->name('password.request')->middleware('guest');
 Route::post('contrasenya', [AuthController::class, 'enviarResetContrasenya'])->name('password.email')->middleware('guest');
 
-// Rutas para recuperar contraseña 
+// Rutas para recuperar contraseña reset
 Route::get('canviarContrasenya/{token}', [AuthController::class, 'resetContrasenya'])->name('password.reset')->middleware('guest');
 Route::post('canviarContrasenya', [AuthController::class, 'resetContrasenyaValidate'])->name('password.update')->middleware('guest');
 
@@ -42,6 +42,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/usuario', [AuthController::class, 'verUsuario'])->name('usuari.index');
     //RESOURCE de rutas del carrito, se gestionan desde su controller
     Route::resource('carrito' , CarritoController::class);
+
+    Route::post('/carrito/pagar', [CarritoController::class, 'procesarPago'])->name('carrito.pagar');
+
+    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+
 });
 
 //Llençar el servidor .... en aplicacio laravel nomes encendre aplicació i iniciar servidor

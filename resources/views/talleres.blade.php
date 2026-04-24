@@ -61,7 +61,7 @@
                                     <div>
                                         <label class="block text-[#c9973a] text-[18px] uppercase tracking-[3px] mb-2 text-center md:text-left">Places reserva :</label>
                                         <select name="cantidad" required class="w-full bg-[#332b22] border border-[#3d352b] text-white text-[12px]
-                                                                                 rounded-xl px-5 py-3 focus:outline-none focus:border-[#c9973a] appearance-none">
+                                                                                 rounded-xl px-5 py-4 focus:outline-none focus:border-[#c9973a] appearance-none">
                                             @for ($i = 1; $i <= $taller->capacitat_max; $i++)
                                                 <option value="{{ $i }}">{{ $i }} {{ $i == 1 ? 'Persona' : 'Persones' }}</option>
                                             @endfor

@@ -36,7 +36,7 @@
                     @foreach($obras as $obra)
                         <div class="w-[95%] md:w-[55%] bg-[#282119] py-16 px-8 md:px-16 rounded-[32px] border border-[#3d352b] shadow-[0_40px_80px_-15px_rgba(0,0,0,0.5)] transition-all duration-700 hover:border-[#c9973a]/40">
                             
-                            <div class="w-full h-[400px] md:h-[560px] bg-[#332b22] rounded-xl mb-12 overflow-hidden shadow-xl">
+                            <div class="w-full h-full object-cover object-top bg-[#332b22] rounded-xl mb-12 shadow-xl">
                                 @if($obra->imagen)
                                     <img src="{{ $obra->imagen }}" 
                                         alt="{{ $obra->titulo }}" 

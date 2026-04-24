@@ -1,1 +1,5 @@
 *.sqlite*
+/public/storage
+/public/images/obras
+/public/images/talleres
+/public/files
