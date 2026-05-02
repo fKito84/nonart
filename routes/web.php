@@ -49,8 +49,12 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
+
+
 //Llençar el servidor .... en aplicacio laravel nomes encendre aplicació i iniciar servidor
+
 //En Visual Code ->Terminal del projecte-> php artisan serve ->Navegador aquesta URL->control+click->http://127.0.0.1:8000
+
 
 //Tens usuari creat 
 /* \App\Models\User::create([
@@ -62,6 +66,11 @@ Route::middleware(['auth'])->group(function () {
         ]);
 
 */
+# Carpeta d'imatges fora ....
+# estan al drive que te compartit
+// I han d'anar a la carpeta public/images/  arrosegues obras i talleres  
+// carpeta drive  https://drive.google.com/drive/folders/1X8tkrU3NiBKo1DTzSD0D2FivqQTyx7Cu?usp=drive_link
+
 
 // la recuperacio de contrasenyes d'usuari ho porta al servei 
 //  mailtrap per fer proves de correu i funciona

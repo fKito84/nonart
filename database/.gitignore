@@ -1,4 +1,5 @@
-*.sqlite*
+# Fitxers de imatges fora ....
+# estan al drive que te compartit
 /public/storage
 /public/images/obras
 /public/images/talleres

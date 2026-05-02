@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Obra;
 use App\Models\Taller;
 use App\Models\Venda;
-use App\Models\detalleVenda;
+use App\Models\DetalleVenda;
 use App\Models\ReservaTaller; 
 use Illuminate\Support\Facades\Auth;
 
@@ -177,7 +177,7 @@ class CarritoController extends Controller
                     ->sum('personas_reserva');
 
                 $nuevoTotal = $totalApuntados + $item['cantidad'];
-                $estadoReserva = ($nuevoTotal >= 8) ? 'confirmat' : 'pendent';
+                $estadoReserva = ($nuevoTotal >= 8) ? 'confirmada' : 'pendent';
 
                 // Creo la reserva
                 $reserva = ReservaTaller::create([
