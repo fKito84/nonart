@@ -24,7 +24,10 @@ class ReservaTaller extends Model
     {
         return $this->belongsTo(User::class);
     }
-
+    public function reservaStocks()
+    {
+        return $this->hasMany(ReservaStock::class, 'reserva_id');
+    }
 
      // gestio de el stock
     public function gestionarStock($tecnicaTaller, $cantidadPersonas)

@@ -121,11 +121,38 @@ class CarritoController extends Controller
         
     }
     
-    public function procesarPago(Request $request)
+   public function procesarPago(Request $request)
     {
-        //Agafo el cistell
+        // Agafo el cistell
         $carrito = session()->get('carrito', []);
         if (empty($carrito)) return redirect()->back()->with('error', 'Cistell buit');
+
+        //  VERIFICACIÓ D'OBRES RECURRENTS ,PER SI HI HAN DOS COMPRAN A LA VEGADA ---
+        $carritoModificado = false;
+        $obrasAgotadas = [];
+
+        foreach ($carrito as $key => $item) {
+            if ($item['tipo'] == 'obra') {
+                $obra = Obra::find($item['id']);
+                
+                // Si la obra no existeix o ja ha estat venuda...
+                if (!$obra || !$obra->disponible) {
+                    $obrasAgotadas[] = $item['titulo']; 
+                    unset($carrito[$key]); // L'eliminem del carret
+                    $carritoModificado = true;
+                }
+            }
+        }
+
+        // Si algú s'ha avançat, guardem el carret net i avisem al client
+        if ($carritoModificado) {
+            session()->put('carrito', $carrito);
+            return redirect()->route('carrito.index')
+                    ->with('error', 'Ho sentim! Se t\'han avançat a la compra de: ' . 
+                        implode(', ', $obrasAgotadas) . '. L\'hem eliminat del teu carret perquè puguis continuar.');
+        }
+        
+
 
         // Calculem el total
         $totalComanda = 0;
@@ -147,7 +174,6 @@ class CarritoController extends Controller
         // Fico el detall de cada article a la taula detall_venda
         foreach ($carrito as $item) {
             
-           
             DetalleVenda::create([
                 'venda_id'      => $venda->id,
                 'tipus_article' => $item['tipo'],
@@ -156,24 +182,22 @@ class CarritoController extends Controller
                 'preu_unitat'   => $item['precio'],
                 'subtotal'      => $item['precio'] * $item['cantidad']
             ]);
+            
             // actualitzo l'obra el estat
             if ($item['tipo'] == 'obra') {
                 $obra = Obra::find($item['id']);
-                if ($obra) {
-                    $obra->disponible = false; 
-                    $obra->save();
-                }
+                $obra->disponible = false; 
+                $obra->save();
             }
 
             if ($item['tipo'] == 'taller') {
                 // Buscamos el taller para saber su técnica
                 $taller = Taller::find($item['id']);
 
-                // mirem si hi ha una resrva amb la mateixa datai comprovo 
-                // el total de persones apuntades per canviar l'estat
-                // aixo hem servira despres per asignar colors al calendari amb l'estat de la reserva
+                // Mirem si hi ha una resrva amb la mateixa data i HORARI
                 $totalApuntados = ReservaTaller::where('taller_id', $item['id'])
                     ->where('data_taller', $item['detalles']['fecha'])
+                    ->where('notes', $item['detalles']['horari']) 
                     ->sum('personas_reserva');
 
                 $nuevoTotal = $totalApuntados + $item['cantidad'];
@@ -189,16 +213,17 @@ class CarritoController extends Controller
                     'notes'            => $item['detalles']['horari'] ?? null
                 ]);
 
-                // Si amb aquesta reserva arribem a 8 actualitzo l'estat de pendent a 
-                // comfirmada ...
+                // Si arribem a 8 actualitzo l'estat a confirmada només per aquest torn
+                // comprobem dia y despres hora per saber qui esta apuntat a una hora 
+                // determinada y saber cantitat persones en aquesta hora
                 if ($nuevoTotal >= 8) {
                     ReservaTaller::where('taller_id', $item['id'])
                         ->where('data_taller', $item['detalles']['fecha'])
+                        ->where('notes', $item['detalles']['horari']) 
                         ->update(['estat' => 'confirmada']);
                 }
 
-                // Enviem la tecnica i la cantitat de persones per 
-                // la resrva d'stock
+                // Enviem la tecnica i la cantitat de persones per la resrva d'stock
                 $reserva->gestionarStock($taller->tecnica, $item['cantidad']); 
             }
         }

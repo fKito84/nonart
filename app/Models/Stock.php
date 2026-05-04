@@ -18,12 +18,7 @@ class Stock extends Model
         'reutilitzable' => 'boolean', 
     ];
 
-    
-    public function tallers()
-    {
-        return $this->belongsToMany(Taller::class, 'taller_stock')
-                    ->withPivot('quantitat_per_persona');
-    }
+
     public function reservaStocks()
     {
         return $this->hasMany(ReservaStock::class, 'stock_id');

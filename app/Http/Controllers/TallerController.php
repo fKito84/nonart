@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Taller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use App\Models\CalendarioExcepcion;
 //Les funcions que no estan actives o desenvolupades son perque o no se si fer-les
 // ho perque encara estan per fer, sobretot perque es facin servir ha d'haber 
 // la part d'admin desenvolupada i no se si es requisit per la versio minima
@@ -24,7 +25,10 @@ class TallerController extends Controller
              
             $imagenes = collect($nombres)->shuffle()->take(16);
         }
-        return view('talleres', compact('talleres', 'imagenes'));
+        // Afegim les exepcions dels calendaris 
+        $excepcions = CalendarioExcepcion::all()->keyBy('data_excepcion');
+
+        return view('talleres', compact('talleres', 'imagenes','excepcions'));
     }
 
 

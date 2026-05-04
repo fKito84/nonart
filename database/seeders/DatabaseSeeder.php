@@ -20,9 +20,9 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::create([
             'name' => 'Admin',
             'email' => 'sbainoa@hotmail.com',
-            'password' => Hash::make('Marcm2906'),
+            'password' => Hash::make('projecte'),
             'role' => 'admin',
-            'phone' => '637703754',
+            'phone' => '633333333',
         ]);
         \App\Models\User::create([
             'name' => 'Marta',
@@ -147,7 +147,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\Taller::create([
             'nom' => 'Taller Aquareles',
             'descripcio' => 'Introducció a les técniques de transparencia y aigua amb acuarel.la.',
-            'tecnica' => 'Aquarela',
+            'tecnica' => 'aquarela',
             'duracio_hores' => 2.5,
             'capacitat_max' => 20,
             'preu' => 25.00,

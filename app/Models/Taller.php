@@ -24,10 +24,5 @@ class Taller extends Model
         return $this->hasMany(ReservaTaller::class);
     }
 
-    // Relació amb l'estoc (Un taller necessita diversos materials)
-    public function stocks()
-    {
-        return $this->belongsToMany(Stock::class, 'taller_stock') 
-                    ->withPivot('quantitat_per_persona');
-    }
+    
 }

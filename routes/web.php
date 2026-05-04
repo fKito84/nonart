@@ -40,6 +40,10 @@ Route::post('registro', [AuthController::class, 'registro'])->name('register.pos
 Route::middleware(['auth'])->group(function () {
     
     Route::get('/usuario', [AuthController::class, 'verUsuario'])->name('usuari.index');
+    //Ruta per l'admisnistrador !!!!
+    Route::get('/admin', [AuthController::class, 'verUsuarioAdmin'])->name('admin.index');
+    // Ruta per accedir a les dates 
+    Route::post('/admin/toggle-dia', [AuthController::class, 'toggleDisponibilitat'])->name('admin.toggleDia');
     //RESOURCE de rutas del carrito, se gestionan desde su controller
     Route::resource('carrito' , CarritoController::class);
 
