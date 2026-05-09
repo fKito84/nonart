@@ -1,27 +1,16 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
-use App\Http\Controllers\Api\APIController;
+use App\Http\Controllers\Api\AuthAPIController;
+use App\Http\Controllers\Api\CarritoAPIController;
 use App\Http\Controllers\Api\ObraAPIController;
 use App\Http\Controllers\Api\TallerAPIController;
-use App\Http\Controllers\Api\CarritoAPIController;
-use App\Http\Controllers\Api\AuthAPIController;
 
-/*
-RUTAS PÚBLIQUES
-*/
-
-// Pantalla de Inici 
-Route::get('/home', [APIController::class, 'index']);
-Route::get('/informacion', [APIController::class, 'informacion']);
-
-// Rutes obres y tallers 
+// Rutes públiques — no necessiten token
 Route::apiResource('obras', ObraAPIController::class)->only(['index', 'show']);
 Route::apiResource('talleres', TallerAPIController::class)->only(['index', 'show']);
 
-// Autenticació i Registre 
+// Autenticació i Registre
 Route::post('login', [AuthAPIController::class, 'login']);
 Route::post('registro', [AuthAPIController::class, 'registro']);
 
@@ -29,30 +18,48 @@ Route::post('registro', [AuthAPIController::class, 'registro']);
 Route::post('contrasenya', [AuthAPIController::class, 'enviarResetContrasenya']);
 Route::post('canviarContrasenya', [AuthAPIController::class, 'resetContrasenyaValidate']);
 
-
 /*
- RUTAS PROTEGIDES amb Token de Sanctum 
+|--------------------------------------------------------------------------
+| RUTES PROTEGIDES amb Token de Sanctum
+| L'usuari ha d'estar autenticat per accedir
+|--------------------------------------------------------------------------
 */
 Route::middleware(['auth:sanctum'])->group(function () {
-    
-    // Perfil del Usuario
+
+    // Perfil de l'usuari autenticat
     Route::get('/usuario', [AuthAPIController::class, 'verUsuario']);
-    
-    // Cerrar sesión (Destruye el token en el móvil)
+
+    // Tancar sessió (destrueix el token al mòbil)
     Route::post('logout', [AuthAPIController::class, 'logout']);
 
-    // Carrito de compras (El usuario debe estar logueado para comprar)
-    Route::apiResource('carrito', CarritoAPIController::class);
-    Route::post('/carrito/pagar', [CarritoAPIController::class, 'procesarPago']);
+    // Carrito — noms propis per no col·lisionar amb la ruta web
+    // La web usa route('carrito.store'), la API usa la URL directa /api/carrito
+    Route::apiResource('carrito', CarritoAPIController::class)->names([
+        'index'   => 'api.carrito.index',
+        'store'   => 'api.carrito.store',
+        'show'    => 'api.carrito.show',
+        'update'  => 'api.carrito.update',
+        'destroy' => 'api.carrito.destroy',
+    ]);
 
-    // --- RUTAS EXCLUSIVAS DEL ADMINISTRADOR ---
-    // (Dentro de los controladores tendremos que verificar que el usuario tiene 'role' == 'admin')
+    // Processar el pagament del carrito
+    Route::post('/carrito/pagar', [CarritoAPIController::class, 'procesarPago'])->name('api.carrito.pagar');
+
+    /*
+        RUTES EXCLUSIVES DE L'ADMINISTRADOR
+  
+    */
     Route::prefix('admin')->group(function () {
-        Route::get('/', [AuthAPIController::class, 'verUsuarioAdmin']); // Dashboard del admin en la App
-        Route::post('/toggle-dia', [AuthAPIController::class, 'toggleDisponibilitat']); // Abrir/cerrar días
-        
-        // El admin sí puede crear, actualizar y borrar obras/talleres
+
+        // Tauler de l'administrador a l'App
+        Route::get('/', [AuthAPIController::class, 'verUsuarioAdmin']);
+
+        // Obrir / tancar dies del calendari
+        Route::post('/toggle-dia', [AuthAPIController::class, 'toggleDisponibilitat']);
+
+        // L'admin pot crear, actualitzar i esborrar obres i tallers
         Route::apiResource('obras', ObraAPIController::class)->except(['index', 'show']);
         Route::apiResource('talleres', TallerAPIController::class)->except(['index', 'show']);
     });
+
 });
