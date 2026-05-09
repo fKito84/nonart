@@ -11,8 +11,9 @@ class ObraAPIController extends Controller
     public function index()
     {
         // Agrupem obres per col·leccions 
-        $obrasAgrupadas = Obra::all()->groupBy('coleccion');
-        
+        $obras = Obra::select('id', 'titulo', 'imagen', 'coleccion', 'precio')->get();
+
+        $obrasAgrupadas = $obras->groupBy('coleccion');
         // Enviem les obres 
         return response()->json([
             'status' => 'success',
@@ -22,7 +23,6 @@ class ObraAPIController extends Controller
 
     public function show(Obra $obra)
     {
-        // Enviem el detall obra
         return response()->json([
             'status' => 'success',
             'data' => $obra

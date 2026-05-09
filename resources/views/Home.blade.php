@@ -7,7 +7,7 @@
     <!-- Capçalera principal (Hero) -->
     <section class="relative h-[400px] md:h-[600px] rounded-3xl overflow-hidden 
                     flex items-center justify-center text-center px-6">
-        <img src="/images/talleres/fotoTaller.png" alt="Fons Hero Nonart" 
+        <img src="/images/talleres/fotoTaller.jpg" alt="Fons Hero Nonart" 
              class="absolute inset-0 w-full h-full object-cover">
         <div class="absolute inset-0 bg-black/40 rounded-3xl"></div>
     </section>
@@ -110,7 +110,7 @@
             <!-- Imatge gran del taller -->
             <div class="relative w-full max-w-[1200px] h-[400px] md:h-[800px] rounded-3xl 
                         overflow-hidden group">
-                <img src="/images/talleres/llocTaller.png" alt="Taller Art and Wine" 
+                <img src="/images/talleres/llocTaller.jpg" alt="Taller Art and Wine" 
                      class="w-full h-full object-cover group-hover:scale-110 
                             transition-transform duration-500">
             </div>

@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
 
     <style>
+        .navbar {
+            padding-top: env(safe-area-inset-top);
+        }
         body { 
             font-family: 'Dela Gothic One', sans-serif; 
             background-color: #1e1914; 
@@ -39,13 +42,14 @@
 <body class="min-h-screen flex flex-col mx-auto min-w-[320px] max-w-[1600px] overflow-x-hidden">
 
     <!-- Capçalera principal : Navbar -->
-    <nav class="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-[1600px] min-w-[320px] h-[80px] 
+    <nav style="padding-top: calc(env(safe-area-inset-top) + 15px); padding-bottom: 15px;" 
+         class="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-[1600px] min-w-[320px] 
                 bg-[#1e1914]/95 backdrop-blur-md border-b border-[#3d352b] z-50 flex items-center 
                 justify-between px-6 lg:px-12">
         
         <!-- Logo -->
         <a href="/home" class="flex items-center w-16 h-16">
-            <img src="/images/aplicacion/logo.png" alt="Logo Nonart" 
+            <img src="{{ asset('images/aplicacion/logo.png') }}" alt="Logo Nonart" 
                  class="w-full h-full object-cover rounded-2xl shadow-sm">
         </a>
 
@@ -110,13 +114,14 @@
     </nav>
 
     <!-- Menú lateral mòbil i PC -->
-    <div id="sideMenu" class="fixed top-0 right-0 h-full w-[80%] md:w-[25%] bg-[#1e1914] z-[60] flex flex-col 
-                              items-center pt-24 translate-x-full transition-transform duration-300 shadow-2xl 
-                              border-l border-[#3d352b]">
+    <div id="sideMenu" style="padding-top: calc(env(safe-area-inset-top) + 80px);" 
+         class="fixed top-0 right-0 h-full w-[80%] md:w-[25%] bg-[#1e1914] z-[60] flex flex-col 
+                items-center translate-x-full transition-transform duration-300 shadow-2xl 
+                border-l border-[#3d352b]">
         
         <!-- Botó tancar menú -->
-        <button id="closeMenu" class="absolute top-6 right-6 text-[#f2ede6] text-xs tracking-widest 
-                                      hover:text-[#c9973a]">
+        <button id="closeMenu" style="top: calc(env(safe-area-inset-top) + 20px);" 
+                class="absolute right-6 text-[#f2ede6] text-xs tracking-widest hover:text-[#c9973a]">
             TANCAR
         </button>
         
@@ -147,9 +152,10 @@
             @endguest
         </div>
     </div>
-
     <!-- Contingut Principal -->
-    <main class="flex-grow pt-[100px] w-full max-w-7xl mx-auto px-4 md:px-6">    
+    <!-- Contingut Principal -->
+    <main style="padding-top: calc(env(safe-area-inset-top) + 110px);" 
+                class="flex-grow w-full max-w-7xl mx-auto px-4 md:px-6">
         
         <!-- Sistema de Notificacions -->
         <div class="max-w-4xl mx-auto mt-6">

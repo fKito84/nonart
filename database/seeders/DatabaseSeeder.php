@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
             'descripcion' => 'Retrat detallat amb èmfasi en les pigues i la mirada de la noia.', 'medidas' => '50x70 cm'],
             ['titulo' => 'Noia Curiosa', 'imagen' => '/images/obras/noia_curiosa.jpg', 
             'descripcion' => 'Exploració de la profunditat visual i l\'expressió de curiositat.', 'medidas' => '60x70 cm'],
-            ['titulo' => 'Fada', 'imagen' => '/images/obras/noia_fada.png',
+            ['titulo' => 'Fada', 'imagen' => '/images/obras/noia_fada.jpg',
              'descripcion' => 'Joc de llums i reflexos sobre la pell de una noia que sembla una fada.', 'medidas' => '50x50 cm'],
             ['titulo' => 'Noia Anglesa', 'imagen' => '/images/obras/noia_anglesa.png', 
             'descripcion' => 'Representació de la noia de cabell curt amb introspecció i el buit.', 'medidas' => '80x1000 cm'],
@@ -72,7 +72,7 @@ class DatabaseSeeder extends Seeder
             'descripcion' => 'Vincle entre elements i emocions d\'aquesta dona gran del interior de Mèxic.', 'medidas' => '50x70 cm'],
             ['titulo' => 'Sincera', 'imagen' => '/images/obras/noia_sincera.png', 
             'descripcion' => 'Espai negatiu i minimalisme emocional de la cara d\'aquesta dona amb mirada trista i sincera.', 'medidas' => '50x70 cm'],
-            ['titulo' => 'Bessones', 'imagen' => '/images/obras/noia_bessones.png', 
+            ['titulo' => 'Bessones', 'imagen' => '/images/obras/noia_bessones.jpg', 
             'descripcion' => 'Espai de dos germanes, minimalisme emocional del costat d\'aquestes dones amb miradestant iguals i diferents a la vegada.', 'medidas' => '150x70 cm'],
         ];
 

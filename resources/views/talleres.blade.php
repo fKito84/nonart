@@ -23,7 +23,7 @@
         <!-- Capçalera (Hero) amb imatge de fons -->
         <section class="relative h-[400px] md:h-[600px] rounded-3xl overflow-hidden 
                         flex items-center justify-center text-center px-6 mb-40">
-            <img src="/images/talleres/fotoTaller.png" 
+            <img src="/images/talleres/fotoTaller.jpg" 
                  alt="Fons Hero Nonart" 
                  class="absolute inset-0 w-full h-full object-cover">
             <div class="absolute inset-0 bg-black/40 rounded-3xl"></div>

@@ -3,7 +3,6 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-// Importamos els nous controladors de la API 
 use App\Http\Controllers\Api\APIController;
 use App\Http\Controllers\Api\ObraAPIController;
 use App\Http\Controllers\Api\TallerAPIController;
@@ -11,7 +10,7 @@ use App\Http\Controllers\Api\CarritoAPIController;
 use App\Http\Controllers\Api\AuthAPIController;
 
 /*
-RUTAS PÚBLICAS 
+RUTAS PÚBLIQUES
 */
 
 // Pantalla de Inici 
