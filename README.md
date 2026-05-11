@@ -75,8 +75,9 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 ## 🎨 Sobre NONART
 
-NONART és una plataforma ecommerce multiplataforma dissenyada per promocionar l'obra artística de l'artista "Nona" i gestionar els seus tallers d'Art & Wine. L'aplicació ofereix tres serveis principals:
-- **Venda d'obres d'art originals** (pintures i escultures).
+NONART és una plataforma ecommerce multiplataforma dissenyada per promocionar l'obra artística de l'artista "Nona" 
+i gestionar els seus tallers d'Art & Wine. L'aplicació ofereix tres serveis principals:
+- **Venda d'obres d'art originals** (pintures).
 - **Reserva de tallers Art & Wine** per a grups (pintura, vi i aperitius).
 - **Gestió interna** d'estoc, reserves, vendes i excepcions de calendari.
 
@@ -115,8 +116,8 @@ La lògica de negoci inclou automatitzacions com:
 
 ### Diagrama Entitat-Relació
 
-```mermaid
-erDiagram
+ER ->
+
     USERS ||--o{ VENDAS : "realitza"
     USERS ||--o{ RESERVA_TALLERES : "fa reserva"
     VENDAS ||--|{ DETALLES_VENDA : "inclou"
@@ -127,39 +128,86 @@ erDiagram
     RESERVA_TALLERES ||--o{ RESERVAS_STOCKS : "utilitza material de"
 
     USERS {
-        bigint id PK
-        string name
-        string email
-        string password
-        enum role "admin, client"
+        $table->id();
+        $table->string('name');
+        $table->string('email')->unique();
+        $table->timestamp('email_verified_at')->nullable();
+        $table->string('password');
+        $table->enum('role', ['admin', 'client'])->default('client'); 
+        $table->string('phone', 20)->nullable(); 
+        $table->rememberToken();
+        $table->timestamps();
     }
     OBRAS {
-        bigint id PK
-        string titulo
-        decimal precio
-        boolean disponible
+        $table->id();
+        $table->string('titulo'); 
+        $table->text('descripcion')->nullable(); 
+        $table->string('tecnica', 100);
+        $table->string('medidas', 50)->nullable();
+        $table->decimal('precio', 8, 2);
+        $table->string('coleccion')->default('sin coleccion');
+        $table->boolean('disponible')->default(true); 
+        $table->string('imagen', 500)->nullable();
+        $table->timestamps(); 
     }
     TALLERS {
-        bigint id PK
-        string nom
-        decimal preu
-        boolean actiu
+        $table->id();
+        $table->string('nom'); 
+        $table->text('descripcio')->nullable();
+        $table->enum('tecnica', ['oleo', 'acrilica', 'aquarela','false'])->default('false');
+        $table->decimal('duracio_hores', 8, 2);
+        $table->integer('capacitat_minima')->default(8);
+        $table->integer('capacitat_max'); 
+        $table->decimal('preu', 8, 2); 
+        $table->boolean('actiu')->default(true); 
+        $table->timestamps();
     }
     VENDAS {
-        bigint id PK
-        decimal total_comanda
-        string estat
+        $table->id();
+        $table->foreignId('user_id')->constrained()->onDelete('restrict');
+        $table->integer('quantitat_total'); // Suma de todos los artículos
+        $table->decimal('total_comanda', 10, 2); // Precio total pagado
+        $table->enum('metode_pagament', ['efectiu', 'targeta', 'transferencia']);
+        $table->enum('estat', ['pendent', 'pagat', 'anulat'])->default('pendent');
+        $table->timestamps();
     }
     STOCKS {
-        bigint id PK
-        string nom_material
-        int quantitat
-        boolean reutilitzable
+        $table->id();
+        $table->string('nom_material'); 
+        $table->text('descripcio')->nullable(); 
+        $table->enum('tecnica', ['oleo', 'acrilica', 'aquarela','false'])->default('false');
+        $table->integer('quantitat')->default(0); 
+        $table->decimal('preu_unitat', 8, 2); 
+        $table->string('proveidor')->nullable(); 
+        $table->boolean('reutilitzable')->default(false); 
+        $table->timestamps();
     }
     RESERVA_TALLERES {
-        bigint id PK
-        date data
-        string estat
+        $table->id();
+        $table->foreignId('user_id')->constrained('users')->onDelete('restrict'); 
+        $table->foreignId('taller_id')->constrained('tallers')->onDelete('restrict'); 
+        $table->integer('personas_reserva')->default(1);
+        $table->dateTime('data_taller'); 
+        $table->enum('estat', ['pendent', 'confirmada', 'cancel.lada'])->default('pendent'); 
+        $table->text('notes')->nullable(); 
+        $table->timestamps();
+    }
+    RESERVA_STOCKS {
+        $table->id();
+        $table->string('nom_material'); 
+        $table->text('descripcio')->nullable(); 
+        $table->enum('tecnica', ['oleo', 'acrilica', 'aquarela','false'])->default('false');
+        $table->integer('quantitat')->default(0); 
+        $table->decimal('preu_unitat', 8, 2); 
+        $table->string('proveidor')->nullable(); 
+        $table->boolean('reutilitzable')->default(false); 
+        $table->timestamps();
+    }
+    CALENDARIO_EXCEPCIONES{
+        $table->id();
+        $table->date('data_excepcion')->unique(); 
+        $table->boolean('tancat'); 
+        $table->timestamps();
     }
 
 🛠️ Guia d'Instal·lació (Entorn Web / Servidor)
@@ -207,7 +255,8 @@ php artisan native:serve
 # Compilar l'app per a distribució (generar executable/APK)
 php artisan native:build
 
-🔌 API REST Endpoints PrincipalsMètodeEndpointDescripcióAutenticacióGET/api/obrasLlistat i detall d'obresPúblicGET/api/talleresLlistat de tallers i excepcionsPúblicPOST/api/loginLogin i generació de token SanctumPúblicGET/api/carritoVeure el carretóAuth (Token)POST/api/carrito/pagarProcessar pagament i validar estocAuth (Token)POST/api/admin/obrasCrear/Modificar/Esborrar obresAdmin (Token)
+🔌 API REST Endpoints per la conexio d'una futura aplicació natviva en llenguatge mobil, preparat per enviar informació 
+amb enviament de Json i rebuda Json
 
 Mètode,Endpoint,Descripció,Autenticació
 GET,/api/obras,Llistat i detall d'obres,Públic
@@ -215,7 +264,7 @@ GET,/api/talleres,Llistat de tallers i excepcions,Públic
 POST,/api/login,Login i generació de token Sanctum,Públic
 GET,/api/carrito,Veure el carretó,Auth (Token)
 POST,/api/carrito/pagar,Processar pagament i validar estoc,Auth (Token)
-POST,/api/admin/obras,Crear/Modificar/Esborrar obres,Admin (Token)
+POST,/api/admin/obras/Modificar/Esborrar obres,Admin (Token)
 
 
 
